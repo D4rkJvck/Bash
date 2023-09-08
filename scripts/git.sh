@@ -36,21 +36,23 @@ Banch_Check() {
 
 #____________________________________________________________________
 #                                                           Add Files
-echo -e "\nSpecify Files to Add:"
-if [ $# -eq 0 ]
-then
-    echo -e "No Files specified..."
-    echo -e "Adding all changes...\n"
-    git add .
-else
-    echo -e "\nAdding Specified files...\n"
-    for file in "$@"
-    do
-        git add "$file"
-        echo -e "Added: $file"
-        echo -e "\n"
-    done
-fi
+Add() {
+    echo -e "\nSpecify Files to Add:"
+    if [ $# -eq 0 ]
+    then
+        echo -e "No Files specified..."
+        echo -e "Adding all changes...\n"
+        git add .
+    else
+        echo -e "\nAdding Specified files...\n"
+        for file in "$@"
+        do
+            git add "$file"
+            echo -e "Added: $file"
+            echo -e "\n"
+        done
+    fi
+}
 
 #______________________________________________________________
 #                                           Syncing with GitHub
@@ -58,6 +60,8 @@ fi
 Cred_Check
 
 Banch_Check
+
+Add "$@"
 
 git status
 
