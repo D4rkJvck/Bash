@@ -8,26 +8,29 @@ Cred_Check() {
     if ! git config --get user.name || ! git config --get user.email
     then
         echo -e "Credentials Not Configured...\n"
+
         read -r -p "Enter Git Username: " username
         read -r -p "Enter Git Email: " email
 
         if [ "$username" != "D4rkJvck" ] || [ "$email" != "d4rkjvck@gmail.com" ]
         then
-            echo -e "Unauthorized Credentials..."
+            echo -e "\nWARNING! Unauthorized Credentials...\n"
+
             Cred_Check
         fi
 
         git config --global user.name "$username"
         git config --global user.email "$email"
-        echo -e "Credentials Configured...\n"
     fi
+
+    echo -e "Credentials Configured...\n"
 }
 
 #___________________________________________________________________________
 #                                                               Check Branch
 Banch_Check() {
     echo -e "\nProject Branches:"
-    git branch
+    git branch -a
 
     current_branch=$(git rev-parse --abbrev-ref HEAD)
     expected_branch="main"
