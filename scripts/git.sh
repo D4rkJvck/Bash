@@ -1,52 +1,36 @@
 #!/bin/bash
 
-#________________________________________________________________________________________
-#                                                                       Check Credentials
+#____________________________________________________________________________________
+#                                                                   Check Credentials
 Cred_Check() {
-    echo -e "\nChecking Credentials..."
 
     if ! git config --get user.name || ! git config --get user.email
     then
-        echo -e "Credentials Not Configured...\n"
+        git config --global user.name "D4rkJvck"
+        git config --global user.email "d4rkjvck@gmail.com"
 
-        read -r -p "Enter Git Username: " username
-        read -r -p "Enter Git Email: " email
-
-        if [ "$username" != "D4rkJvck" ] || [ "$email" != "d4rkjvck@gmail.com" ]
-        then
-            echo -e "\nWARNING! Unauthorized Credentials...\n"
-
-            Cred_Check
-        fi
-
-        git config --global user.name "$username"
-        git config --global user.email "$email"
-    fi
-
-    echo -e "Credentials Configured...\n"
-}
-
-#___________________________________________________________________________
-#                                                               Check Branch
-Banch_Check() {
-    echo -e "\nProject Branches:"
-    git branch -a
-
-    current_branch=$(git rev-parse --abbrev-ref HEAD)
-    expected_branch="main"
-
-    if [ "$current_branch" != "$expected_branch" ]
-    then
-        echo -e "\nNot on expected branch( $expected_branch ) !\n"
-        echo -e "Current branch: $current_branch\n"
-        exit 1
+        echo -e "Credentials Configured...\n"
     fi
 }
 
 #____________________________________________________________________
-#                                                           Add Files
+#                                                        Check Branch
+Banch_Check() {
+
+    echo -e "\nProject Branches:"
+    git branch -a
+
+    if [ "$(git rev-parse --abbrev-ref HEAD)" != "main" ]
+    then
+        echo -e "\nWARNING! Not on branch 'main'\n"
+        exit 1
+    fi
+}
+
+#_________________________________________________________
+#                                                Add Files
 Add() {
-    echo -e "\nSpecify Files to Add:"
+    
     if [ $# -eq 0 ]
     then
         echo -e "No Files specified..."
@@ -54,11 +38,11 @@ Add() {
         git add .
     else
         echo -e "\nAdding Specified files...\n"
+
         for file in "$@"
         do
             git add "$file"
-            echo -e "Added: $file"
-            echo -e "\n"
+            echo -e "Added: $file\n"
         done
     fi
 }
