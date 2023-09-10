@@ -11,6 +11,12 @@ Cred_Check() {
         read -r -p "Enter Git Username: " username
         read -r -p "Enter Git Email: " email
 
+        if [ "$username" != "D4rkJvck" ] || [ "$email" != "d4rkjvck@gmail.com" ]
+        then
+            echo -e "Unauthorized Credentials..."
+            Cred_Check
+        fi
+
         git config --global user.name "$username"
         git config --global user.email "$email"
         echo -e "Credentials Configured...\n"
