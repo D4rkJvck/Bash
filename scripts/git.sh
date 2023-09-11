@@ -57,6 +57,7 @@ Banch_Check
 Add "$@"
 
 git status
+echo -e "\n"
 
 read -r -p "Enter Commit Message: " message
 
